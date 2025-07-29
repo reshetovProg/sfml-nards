@@ -1,10 +1,19 @@
 #include "Game.h"
 
 Game::Game():
-	window(sf::VideoMode(800, 600), "SFML window"),
-	circle(20.f)
+	window(sf::VideoMode(1000, 1000), "NARDS")
 {
-	circle.setFillColor(sf::Color::Green);
+
+    if (!bgTexture.loadFromFile("src/bg.jpg")) {
+        std::cout << "bg not loaded";
+    }
+    bgSprite.setTexture(bgTexture);
+
+    for (int i = 0; i < 24; i++) {
+        Chip chip;
+        chip.setPosition(fieldCoord[i]);
+        field[i].push_back(chip);
+    }
 }
 
 void Game::run()
@@ -33,6 +42,6 @@ void Game::update()
 void Game::render()
 {
     window.clear();
-    window.draw(circle);
+    window.draw(bgSprite);
     window.display();
 }
